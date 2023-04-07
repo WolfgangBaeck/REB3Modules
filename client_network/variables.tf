@@ -39,7 +39,7 @@ variable "subnet_size" {
   type = string
   validation {
     condition     = contains(["large", "small"], var.subnet_size)
-    error_message = "Valid values are large or small"
+    error_message = "Valid values are large or small."
   }
   description = "Indicates large or small subnet_map to be used"
 }
