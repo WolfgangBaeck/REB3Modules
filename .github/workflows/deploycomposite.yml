@@ -1,0 +1,46 @@
+name: Deployment
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - main
+    paths:
+      - modules/**
+jobs:
+  delta:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code for delta client
+        uses: actions/checkout@v3
+        with:
+          repository: WolfgangBaeck/REB3AZURE
+          path: ./r3dev-delta
+      - name: Get code from composite action folder
+        uses: actions/checkout@v3
+        with:
+          repository: WolfgangBaeck/REB3AZURE
+          path: ./.github/actions/terraform
+      - name: Output filesystem
+        run: ls -l -R
+      - name: Run Terraform
+        uses: ./.github/actions/terraform
+  epsilon:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code for epsilon client
+        uses: actions/checkout@v3
+        with:
+          repository: WolfgangBaeck/REB3AZURE
+          path: ./r3dev-epsilon
+      - name: Output contents on runner
+        run: ls -l -R
+  zeta:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code for zeta client
+        uses: actions/checkout@v3
+        with:
+          repository: WolfgangBaeck/REB3AZURE
+          path: ./r3dev-zeta
+      - name: Output contents on runner
+        run: ls
