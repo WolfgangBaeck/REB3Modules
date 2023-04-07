@@ -13,9 +13,10 @@ runs:
   # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
   - name: Terraform Init
     id: init
+    shell: bash  
     run: terraform init 
 
     # On push to main, build or change infrastructure according to Terraform configuration files
   - name: Terraform Apply
-    run: terraform apply -auto-approve
     shell: bash  
+    run: terraform apply -auto-approve
