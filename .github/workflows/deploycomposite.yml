@@ -4,7 +4,9 @@ on:
 
 jobs:
   delta:
+    name: Deploy All
     runs-on: ubuntu-latest
+    
     steps:
     # Checkout client files first to runner's root file system
 #      - name: Get code for delta client
