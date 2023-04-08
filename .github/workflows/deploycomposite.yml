@@ -10,15 +10,25 @@ jobs:
   delta:
     runs-on: ubuntu-latest
     steps:
-    # Checkout the module repository into separate folder protecting root files
-      - name: Checkout Modules
+    # The order of checkouts is important because of cleaning and the step afterwards will not find anything
+    # unless there is a specific path specified!
+
+    # Checkout client files to root folder
+      - name: Checkout Client
         uses: actions/checkout@v3
 
-      - name: Output filesystem
+      # Checkout the module repository to separate folder protecting root file system    
+      - name: Checkout Modules
+        uses: actions/checkout@v3
+        with:
+          repository: WolfgangBaeck/REB3Modules
+          path: modules
+
+      - name: Show FileSystem
         run: ls -R
 
       - name: Run Terraform Action
-        uses: ./.github/actions/terraform
+        uses: ./modules/.github/actions/terraform
         
   epsilon:
     runs-on: ubuntu-latest
