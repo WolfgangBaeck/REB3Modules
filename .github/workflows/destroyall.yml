@@ -1,4 +1,4 @@
-name: Deploy All
+name: Destroy All
 on:
   workflow_dispatch:
 env:
