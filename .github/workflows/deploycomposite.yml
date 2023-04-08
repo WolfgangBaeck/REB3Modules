@@ -33,6 +33,7 @@ jobs:
         uses: ./modules/.github/actions/terraform
         
   walm:
+    needs: delta
     runs-on: ubuntu-latest
     steps:
     # The order of checkouts is important because of cleaning and the step afterwards will not find anything
