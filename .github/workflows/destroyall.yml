@@ -30,7 +30,7 @@ jobs:
         run: ls -R
 
       - name: Run Terraform Action
-        uses: ./modules/.github/actions/terraformdestroy
+        uses: ./modules/.github/actions/terraformdeploy
         
   walm:
     runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
         run: ls -R
 
       - name: Run Terraform Action
-        uses: ./modules/.github/actions/terraformdestroy
+        uses: ./modules/.github/actions/terraformdeploy
 
   zeta:
     runs-on: ubuntu-latest
