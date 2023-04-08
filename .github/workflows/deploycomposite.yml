@@ -32,31 +32,7 @@ jobs:
       - name: Run Terraform Action
         uses: ./modules/.github/actions/terraform
         
-  walm:
-    needs: delta
-    runs-on: ubuntu-latest
-    steps:
-    # The order of checkouts is important because of cleaning and the step afterwards will not find anything
-    # unless there is a specific path specified!
 
-    # Checkout client files to root folder
-      - name: Checkout Client
-        uses: actions/checkout@v3
-        with:
-          repository: WolfgangBaeck/REB3Walm
-
-      # Checkout the module repository to separate folder protecting root file system    
-      - name: Checkout Modules
-        uses: actions/checkout@v3
-        with:
-          repository: WolfgangBaeck/REB3Modules
-          path: modules
-
-      - name: Show FileSystem
-        run: ls -R
-
-      - name: Run Terraform Action
-        uses: ./modules/.github/actions/terraform
 
   zeta:
     runs-on: ubuntu-latest
