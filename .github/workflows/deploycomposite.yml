@@ -17,7 +17,7 @@ jobs:
       - name: Checkout Client
         uses: actions/checkout@v3
         with:
-          repository: WolfganBaeck/REB3Delta
+          repository: WolfgangBaeck/REB3Delta
 
       # Checkout the module repository to separate folder protecting root file system    
       - name: Checkout Modules
