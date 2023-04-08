@@ -1,7 +1,12 @@
 # The storage account will be used to store the script for Custom Script extension
 
+resource "random_string" "random_suffix" {
+  length  = 6
+  special = false
+  upper   = false
+}
 resource "azurerm_storage_account" "vmprovisioning" {
-  name                     = "whb12vmprovisioning12345"
+  name                     = "${var.client_name}vmproving${random_string.random_suffix.result}"
   location                 = var.location
   resource_group_name      = var.resource_group_name
   account_tier             = "Standard"
