@@ -9,7 +9,7 @@ Because of the impact that the decision of the repository structure has on relea
 ## Workflows
 The idea of the poly-repo structure is that each spoke repository can have its own workflow and deployments are made based on triggering events such as a push or a pull-request in a spoke repository. At the same time, we need to be able to trigger the workflows in the spoke repository if a triggering event occurs in the hub repository. GitHub does not natively support the execution of workflow b in repository B if a push in repository A happens causing a workflow a. This can be accomplished by running cron events in the spoke repositories checking for changes in releases in the hub repository.
 
-I have currently decided to create a general workflow for the Reb3Modules repository causing the build for each spoke repository by scheduling a build job for each spoke repository via the following steps for each spoke:
+I have currently decided to delay the introduction of a cron job and to create a general workflow for the Reb3Modules repository causing the build for each spoke repository by scheduling a build job for each spoke repository via the following steps for each spoke:
 ```
 delta:
     runs-on: ubuntu-latest
@@ -171,3 +171,7 @@ resource "azurerm_storage_container" "core-container" {
 When the state file has the "LEASE STATUS" of "unlocked" a Terraform process can run and require the exclusive lock on this state file. If the state is "locked" then either a process is currently running or a process may have been deleted and therefore wasn't able to release the lock. In that case, one needs to go to the contain end break the lease:
 
 ![screenshot](breakthelease.png)
+
+# State Separation for Environments (Prod, Test, Dev)
+The aspect of state separation, whether via directories or workspaces has not been approached yet. Directory separated environments will rely on duplication Terraform code with the result of creation drift between the environments over time. If we where to attempt environment separation via workspaces, we would be forced to make the workspaces in the CLI.
+I had no time yet to investigate the idea presented by Microsoft to employ TerraGrunt for this.
