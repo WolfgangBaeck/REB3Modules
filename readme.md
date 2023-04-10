@@ -10,7 +10,8 @@ Because of the impact that the decision of the repository structure has on relea
 The idea of the poly-repo structure is that each spoke repository can have its own workflow and deployments are made based on triggering events such as a push or a pull-request in a spoke repository. At the same time, we need to be able to trigger the workflows in the spoke repository if a triggering event occurs in the hub repository. GitHub does not natively support the execution of workflow b in repository B if a push in repository A happens causing a workflow a. This can be accomplished by running cron events in the spoke repositories checking for changes in releases in the hub repository.
 
 I have currently decided to create a general workflow for the Reb3Modules repository causing the build for each spoke repository by scheduling a build job for each spoke repository via the following steps for each spoke:
-`delta:
+```
+delta:
     runs-on: ubuntu-latest
     steps:
     # The order of checkouts is important because of cleaning and the step afterwards will not find anything
@@ -33,21 +34,24 @@ I have currently decided to create a general workflow for the Reb3Modules reposi
         run: ls -R
 
       - name: Run Terraform Action
-        uses: ./modules/.github/actions/terraformdeploy`
+        uses: ./modules/.github/actions/terraformdeploy
+```
 The code section above will be repeated for each spoke repository that is coded in the workflow yaml file in the Reb3Modules repository.
 
 ## Reusable actions
 Since we need to run the deployment for each client separately either in parallel or in sequence depending on our desire and the ability of Azure to cope with it, it is meaningful to embed the repetitive Terraform actions in its own action.yml file to be called for each job. This happens in the code above at the line of:
 
-`
+```
 name: Run Terraform Action
- uses: ./modules/.github/actions/terraformdeploy'
+ uses: ./modules/.github/actions/terraformdeploy
+```
 because the modules repository is checked out to the folder ./modules and not the root folder on the runner, we need to refer to the modules folder when calling the reusable (composite) action.
 
 ## Environment variables and secrets
 Currently, the workflow in the Reb3Module repository is making use of environment variables for the entire workflow like so:
 
-`name: Deploy All
+```
+name: Deploy All
 on:
   workflow_dispatch:
 env:
@@ -61,9 +65,11 @@ jobs:
   Epsilon:
   ...
   ...
-  Walm`
+  Walm
+```
 This implies that all the workflow jobs share the same secrets. If this isn't appropriate because we have different subscription ids for each client repository which is trivial to set in each client repository and the respective workflow, we will have to now employ job specific secrets in the Reb3Module repository:
-`name: Deploy All
+```
+name: Deploy All
 on:
   workflow_dispatch:
 jobs:
@@ -82,5 +88,6 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.Epsilon_ARM_SUBSCRIPTION_ID }}
   ...
   ...
-  Walm`
+  Walm
+```
 It is obvious that this can result in a number of problems since we have the information now in more than one place.
