@@ -169,4 +169,4 @@ resource "azurerm_storage_container" "core-container" {
 }
 ```
 When the state file has the "LEASE STATUS" of "unlocked" a Terraform process can run and require the exclusive lock on this state file. If the state is "locked" then either a process is currently running or a process may have been deleted and therefore wasn't able to release the lock. In that case, one needs to go to the contain end break the lease:
-!(/assets/images/breakthelease.png)
+![screenshot](breakthelease.png)
