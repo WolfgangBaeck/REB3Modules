@@ -10,8 +10,7 @@ Because of the impact that the decision of the repository structure has on relea
 The idea of the poly-repo structure is that each spoke repository can have its own workflow and deployments are made based on triggering events such as a push or a pull-request in a spoke repository. At the same time, we need to be able to trigger the workflows in the spoke repository if a triggering event occurs in the hub repository. GitHub does not natively support the execution of workflow b in repository B if a push in repository A happens causing a workflow a. This can be accomplished by running cron events in the spoke repositories checking for changes in releases in the hub repository.
 
 I have currently decided to create a general workflow for the Reb3Modules repository causing the build for each spoke repository by scheduling a build job for each spoke repository via the following steps for each spoke:
-`
-delta:
+`delta:
     runs-on: ubuntu-latest
     steps:
     # The order of checkouts is important because of cleaning and the step afterwards will not find anything
