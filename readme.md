@@ -33,16 +33,13 @@ I have currently decided to create a general workflow for the Reb3Modules reposi
         run: ls -R
 
       - name: Run Terraform Action
-        uses: ./modules/.github/actions/terraformdeploy
-        
-`
+        uses: ./modules/.github/actions/terraformdeploy`
 The code section above will be repeated for each spoke repository that is coded in the workflow yaml file in the Reb3Modules repository.
 
 ## Environment variables and secrets
 Currently, the workflow in the Reb3Module repository is making use of environment variables for the entire workflow like so:
 
-`
-name: Deploy All
+`name: Deploy All
 on:
   workflow_dispatch:
 env:
@@ -56,11 +53,9 @@ jobs:
   Epsilon:
   ...
   ...
-  Walm
-`
+  Walm`
 This implies that all the workflow jobs share the same secrets. If this isn't appropriate because we have different subscription ids for each client repository which is trivial to set in each client repository and the respective workflow, we will have to now employ job specific secrets in the Reb3Module repository:
-`
-name: Deploy All
+`name: Deploy All
 on:
   workflow_dispatch:
 jobs:
@@ -79,6 +74,5 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.Epsilon_ARM_SUBSCRIPTION_ID }}
   ...
   ...
-  Walm
-`
+  Walm`
 It is obvious that this can result in a number of problems since we have the information now in more than one place.
