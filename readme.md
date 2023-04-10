@@ -1,4 +1,4 @@
-# Reb3 Modules Repository
+# Reb3Modules Repository
 The modules repository is a part of a group of repositories, similar to a hub and spoke arrangement where the hub repository, namely Reb3Modules is the central
 repository being used by the spoke repositories. The spoke repositores are those which use the reusable module specifications in the Reb3Modules hub repository to build their environment.
 In the current proof of concept state, the spoke repositories are Reb3Delta, Reb3Epsilon, and Reb3Walm all of which use the same set of modules from the Reb3Modules repository.
@@ -91,3 +91,28 @@ jobs:
   Walm
 ```
 It is obvious that this can result in a number of problems since we have the information now in more than one place.
+# Spoke Repository
+Spoke repositories are all those that utilize the Reb3Module repository to implement the Terraform code necessary for a complete client deployment. Examples are Reb3Walm and Reb3Kroger for example. Spoke repositories have their own deployment and destroy definitions as well as their own set of secrets holding the necessary information for tenent, client, subscription, and secrets which must be kept in synch with the Reb3Module secrets if the intent to run all spoke deployments automatically upon a deployment in the Reb3Module repository.
+## Spoke Repository Creation
+When creating a repository for a new client, several steps have to be completed in the right order:
+1. Creating the client repository and uploading the terraform code for the client
+2. Adding the secrets for the action workflow to the repository, typically tenantid, clientid, clientsecret, subscriptionid.
+3. Creating the backend Terraform state repository as an Azure storage account. The creation of the state storage account presents us with a chicken - egg problem and will therefore most like stay a separate terraform or powershell script.
+4. Updating the client's provider.tf file with the appropriate storage account information (the example below is for WALM):
+
+```
+terraform {
+    backend "azurerm" {
+    resource_group_name  = "r3uswalm-tfstate-rg"
+    storage_account_name = "r3uswalmtftp885kev"
+    container_name       = "core-tfstate"
+    key                  = "actions.tfstate"
+  }
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "3.46.0"
+    }
+  }
+}
+```
