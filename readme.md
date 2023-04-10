@@ -39,7 +39,8 @@ The code section above will be repeated for each spoke repository that is coded 
 ## Reusable actions
 Since we need to run the deployment for each client separately either in parallel or in sequence depending on our desire and the ability of Azure to cope with it, it is meaningful to embed the repetitive Terraform actions in its own action.yml file to be called for each job. This happens in the code above at the line of:
 
-`name: Run Terraform Action
+`
+name: Run Terraform Action
  uses: ./modules/.github/actions/terraformdeploy'
 because the modules repository is checked out to the folder ./modules and not the root folder on the runner, we need to refer to the modules folder when calling the reusable (composite) action.
 
