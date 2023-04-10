@@ -173,5 +173,5 @@ When the state file has the "LEASE STATUS" of "unlocked" a Terraform process can
 ![screenshot](breakthelease.png)
 
 # State Separation for Environments (Prod, Test, Dev)
-The aspect of state separation, whether via directories or workspaces has not been approached yet. Directory separated environments will rely on duplication Terraform code with the result of creation drift between the environments over time. If we where to attempt environment separation via workspaces, we would be forced to make the workspaces in the CLI.
+The aspect of state separation, whether via directories or workspaces has not been approached yet. Directory separated environments will rely on duplication of Terraform code with the result of creating drift between the environments over time. If we where to attempt environment separation via workspaces, we would be forced to manage the workspaces in the CLI.
 I had no time yet to investigate the idea presented by Microsoft to employ TerraGrunt for this.
