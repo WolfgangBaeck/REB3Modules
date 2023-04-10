@@ -41,7 +41,7 @@ The code section above will be repeated for each spoke repository that is coded 
 
 ## Environment variables and secrets
 Currently, the workflow in the Reb3Module repository is making use of environment variables for the entire workflow like so:
-'
+`
 name: Deploy All
 on:
   workflow_dispatch:
