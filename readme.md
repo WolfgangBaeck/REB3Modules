@@ -90,7 +90,7 @@ jobs:
   ...
   Walm
 ```
-It is obvious that this can result in a number of problems since we have the information now in more than one place.
+It is obvious that this can result in a number of problems since we have the information now in more than one place and for this reason, GitHub provides the definition of an environment such as "UAT", "PROD", or anything else you may need and with this, you can specikfy secrets with the same name but different values for each environment. At the moment, the repositories are not set up with environments.
 # Spoke Repository
 Spoke repositories are all those that utilize the Reb3Module repository to implement the Terraform code necessary for a complete client deployment. Examples are Reb3Walm and Reb3Kroger for example. Spoke repositories have their own deployment and destroy definitions as well as their own set of secrets holding the necessary information for tenent, client, subscription, and secrets which must be kept in synch with the Reb3Module secrets if the intent to run all spoke deployments automatically upon a deployment in the Reb3Module repository.
 ## Spoke Repository Creation
@@ -174,4 +174,4 @@ When the state file has the "LEASE STATUS" of "unlocked" a Terraform process can
 
 # State Separation for Environments (Prod, Test, Dev)
 The aspect of state separation, whether via directories or workspaces has not been approached yet. Directory separated environments will rely on duplication of Terraform code with the result of creating drift between the environments over time. If we where to attempt environment separation via workspaces, we would be forced to manage the workspaces in the CLI.
-I had no time yet to investigate the idea presented by Microsoft to employ TerraGrunt for this.
+I had no time yet to investigate the idea presented by Microsoft to employ TerraGrunt for this but after looking into the issue of GitHub Environments and also into "replacement-tokens" with Azure Pipelines, it may not be desireable at all.
